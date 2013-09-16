@@ -4,12 +4,7 @@
 #include "Camera.h"
 #include <iostream>
 #include <fstream>
-#include <sstream>
 #include <string>
-using std::cout;
-using std::endl;
-using std::ifstream;
-using namespace std;
 
 class fileReader {
 public:
