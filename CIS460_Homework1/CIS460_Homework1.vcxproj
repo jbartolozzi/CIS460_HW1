@@ -82,14 +82,16 @@
     <ClInclude Include="EasyBMP_DataStructures.h" />
     <ClInclude Include="EasyBMP_VariousBMPutilities.h" />
     <ClInclude Include="fileReader.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="raymarch.h" />
     <ClInclude Include="voxel.h" />
     <ClInclude Include="voxelBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="EasyBMP.cpp" />
     <ClCompile Include="fileReader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="raymarch.cpp" />
     <ClCompile Include="voxel.cpp" />
     <ClCompile Include="voxelBuffer.cpp" />
   </ItemGroup>

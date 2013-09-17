@@ -6,11 +6,19 @@ Camera* fileReader::getCameraFromFile() {
 	newCam->eye = EYEP;
 	newCam->up = UVEC;
 	newCam->view = VDIR;
-	newCam->fovY = FOVY;
+	newCam->fovY = glm::radians(FOVY);
+	newCam->fovX = glm::radians((RESO.x/RESO.y)*FOVY);
+	newCam->camSet = false;
+	newCam->imgWidth = RESO.x;
+	newCam->imgHeight = RESO.y;
 	return newCam;
 }
 
-fileReader::fileReader(char* filename) {
+fileReader::fileReader() {
+	cout << "Please Input File Name: ";
+	char* filename = new char[25];
+	cin >> filename;
+
 	std::string line;
 	ifstream file(filename);
 	readAllAttributes = false;
@@ -44,7 +52,6 @@ void fileReader::readAttributes(char* line) {
 	}
 	else if (strcmp(attribute, "XYZC")==0) {
 		XYZC = readNextVecToken();
-		cout << XYZC.x << ", " << XYZC.y << ", " << XYZC.z << endl;
 	}
 	else if (strcmp(attribute, "BRGB")==0) {
 		BRGB = readNextVecToken();
@@ -53,7 +60,7 @@ void fileReader::readAttributes(char* line) {
 		MRGB = readNextVecToken();
 	}
 	else if (strcmp(attribute, "FILE")==0) {
-		FILE = readNextCharToken();
+		strcpy(FILE, readNextCharToken());
 	}
 	else if (strcmp(attribute, "RESO")==0) {
 		RESO.x = readNextIntToken();

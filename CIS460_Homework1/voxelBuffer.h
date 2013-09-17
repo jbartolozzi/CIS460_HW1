@@ -10,9 +10,11 @@ private:
 	int height;
 
 public:
+	float voxelSize;
 	voxelBuffer();
-	voxelBuffer(int width, int height, int depth);
-	voxel get(int x, int y, int z);
+	voxelBuffer(float* input, int _width, int _height, int _depth, float size);
+	voxel at(int x, int y, int z);
+	voxel get(glm::vec3 v);
 	voxel* voxelArray;
 };
 #endif
