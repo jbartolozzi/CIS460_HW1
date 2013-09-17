@@ -11,6 +11,7 @@ public:
 	Camera* cam;
 	voxelBuffer* vb;
 	raymarch();
+	void calculateValues();
 };
 
 #endif
