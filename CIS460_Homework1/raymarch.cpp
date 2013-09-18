@@ -23,7 +23,6 @@ void raymarch::calculateValues() {
 	output.SetBitDepth(24);
 	char* filename = fr->FILE;
 	float step = fr->STEP;
-
 	// for each x
 	for (int sx = 0; sx < fr->RESO.x; sx++) {
 		if (sx % 100 == 0) {
@@ -34,10 +33,18 @@ void raymarch::calculateValues() {
 			glm::vec3 outColor(0.0,0.0,0.0);
 			glm::vec3 direction = glm::normalize(cam->getDirectionFromCoordinate(sx,sy)-cam->eye);
 			float T = 1.0;
-
+			glm::vec3 Nrml(0,0,1);
+			glm::vec3 Pnt(1,1,0);
 			// for each step
 			// camera z + depth of buffer / step size
-			for(int t = 1; t < ((cam->eye.z + vb->depth) / fr->STEP); t++) {
+			float a2 = -1 * glm::dot(direction,Nrml);
+			float a1 = glm::dot(cam->eye,Nrml);
+			int a3 = glm::floor(a1/a2);
+			if (a3 > 0) {
+				cout << "break" << endl;
+			}
+			for(int t = a3; t < ((cam->eye.z + vb->depth) / (fr->STEP)); t++) {
+
 				glm::vec3 ray = cam->eye + (direction * (t * step));
 				voxel* currentV = vb->get(ray);
 				if (currentV != NULL && currentV->density > 0) {
