@@ -37,3 +37,7 @@ void Camera::printImage(char* outputName) {
 	}
 	output.WriteToFile(outputName);
 }
+
+Camera::Camera() {
+	camSet = false;
+}

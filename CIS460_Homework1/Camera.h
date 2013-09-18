@@ -24,6 +24,7 @@ public:
 	glm::vec3 getDirectionFromCoordinate(int sx, int sy);
 	void setCameraState();
 	void printImage(char* outputName);
+	Camera();
 };
 
 #endif

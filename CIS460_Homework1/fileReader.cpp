@@ -7,25 +7,22 @@ Camera* fileReader::getCameraFromFile() {
 	newCam->up = UVEC;
 	newCam->view = VDIR;
 	newCam->fovY = glm::radians(FOVY);
-	newCam->fovX = glm::radians((RESO.x/RESO.y)*FOVY);
+	newCam->fovX = glm::atan((RESO.x/RESO.y)*glm::tan(glm::radians(FOVY)));
 	newCam->camSet = false;
 	newCam->imgWidth = RESO.x;
 	newCam->imgHeight = RESO.y;
 	return newCam;
 }
 
-fileReader::fileReader() {
-	cout << "Please Input File Name: ";
-	char* filename = new char[25];
-	cin >> filename;
-
+fileReader::fileReader(char* fileName) {
 	std::string line;
-	ifstream file(filename);
+	ifstream file(fileName);
 	readAllAttributes = false;
 	voxelDensityIndex = 0;
-
+	ORIG = glm::vec3(0.0,0.0,0.0);
 	while (!file.good()) {
 		cout << "Invalid File Name Please Try Again: ";
+		char* filename = new char[25];
 		cin >> filename;
 		file.open(filename);
 	}
@@ -84,19 +81,22 @@ void fileReader::readAttributes(char* line) {
 	else if (strcmp(attribute, "LCOL")==0) {
 		LCOL = readNextVecToken();
 	}
+	else if (strcmp(attribute, "ORIG")==0) {
+		ORIG = readNextVecToken();
+	}
 	else {
-		int widthVB = XYZC.x;
-		int heightVB = XYZC.y;
-		int depthVB = XYZC.z;
+		int size = XYZC.x * XYZC.y * XYZC.z; 
 		readAllAttributes = true;
-		voxelDensities = new float[(widthVB * heightVB * depthVB)];
+		voxelDensities = new float[size];
 		readVoxelDensity(attribute);
 	}
 }
 
 void fileReader::readVoxelDensity(char* line) {
-	voxelDensities[voxelDensityIndex] = (float) atof(line);
-	voxelDensityIndex++;
+	if (voxelDensityIndex < (XYZC.x * XYZC.y * XYZC.z)) {
+		voxelDensities[voxelDensityIndex] = (float) atof(line);
+		voxelDensityIndex++;
+	}
 }
 
 char* fileReader::readNextCharToken(){

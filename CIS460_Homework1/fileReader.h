@@ -23,12 +23,13 @@ public:
 	float FOVY;		// half angle of view in Y direction 
 	glm::vec3 LPOS;	// position of light in world space
 	glm::vec3 LCOL;	// color of point light in floating point
+	glm::vec3 ORIG; // the origin of the voxel buffer
 
 	int voxelDensityIndex;
 	bool readAllAttributes;
 	float* voxelDensities;
 
-	fileReader();
+	fileReader(char* fileName);
 	void readAttributes(char* line);
 	void readVoxelDensity(char* line);
 	Camera* getCameraFromFile();

@@ -7,11 +7,13 @@
 
 class raymarch {
 public:
+	float kValue;
 	fileReader* fr;
 	Camera* cam;
 	voxelBuffer* vb;
-	raymarch();
+	raymarch(char* filename);
 	void calculateValues();
+	float computeLightValue(glm::vec3* currentVoxel);
 };
 
 #endif
